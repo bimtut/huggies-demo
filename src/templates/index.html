@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html class="no-js" lang="">
+
+<head>
+  <meta charset="utf-8" />
+  <title>Home - Huggies Demo</title>
+  <!-- katanya description menunjukan keterangan web yang akan bantu pencarian oleh botnya google -->
+  <meta name="description" content="Demo untuk microsite huggies" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="author" content="Bima Putra">
+
+  <!-- OG Tag membantu pembuatan link share dari facebook -->
+  <meta property="og:title" content="Huggies Indonesia" />
+  <meta property="og:type" content="popok untuk anak negeri" />
+  <meta property="og:url" content="" />
+  <meta property="og:image" content="" />
+
+  <link rel="manifest" href="site.webmanifest" />
+  <link rel="apple-touch-icon" href="images/favicon.ico" />
+  <!-- Place favicon.ico in the root directory -->
+
+  <link rel="stylesheet" href="./css/app.minify.css" />
+  <link rel="icon" href="images/favicon.ico" />
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.2/css/all.css">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.2/css/v4-shims.css">
+
+  <!-- ngefek ke tampilan warna tab di android phone. bagus untuk branding -->
+  <meta name="theme-color" content="#B91C1C" />
+</head>
+
+<body onload="document.getElementById('id01').style.display='block'" class="w3-button w3-black">
+
+  <!-- Add your site or application content here -->
+  <!-- START: Header  -->
+  <header class="w-full z-50 px-4 fixed ">
+    <div class="container mx-auto py-2">
+      <div class="flex flex-stretch items-center">
+        <!-- START: logo -->
+        <div class="w-32 flex items-center">
+          <a href="index.html">
+            <img src="images/design/logo.png" alt="luxspace belajar bikin web">
+
+          </a>
+        </div>
+        <!-- END: logo -->
+
+        <!-- START: Menu hamburger wrapper -->
+        <div class="w-auto h-auto">
+          <!-- 
+            STORY:
+            - md: ketika pakai layar  desktop atau ukuran di atas standar screen md , maka pakai settingan md
+            - default (tanpa keterangan): pada project ini adalah settingan untuk layar yang lebih kecil dari md (mobile) jika md didefinisikan. atau settingan keseluruhan jenis screen jika md tidak dirumuskan 
+            - nama class lain yang dituliskan mewakili fungsi style-nya yang terdaftar pada tailwinds (mirip bootsrap)
+           -->
+          <ul id="menu"
+            class="fixed bg-white inset-0 flex flex-col invisible items-center justify-center opacity-0 md:visible md:flex-row md:bg-transparent md:relative md:opacity-100 z-40 ">
+            <!-- bikin taroh dp ya di sini -->
+            <li class="mx-3 py-6 md:py-0 md:hidden">
+              <div class="flex flex-row">
+                <img src="../images/content/bima.jpg" alt="display picture" class="dp rounded-full mr-1 ">
+                <span class="text-lg font-semibold">putra</span>
+              </div>
+            </li>
+            <li class="mx-3 py-6 md:py-0 nav-link fromLeft ml-10">
+              <a href="https://www.huggies.co.id/id-id/why-huggies"
+                class="text-white font-semibold text-base whitespace-nowrap normal-case">Why
+                Huggies?</a>
+            </li>
+
+            <li class="mx-3 py-6 md:py-0 nav-link fromLeft">
+              <a href="grand-prize.html" class="text-white font-semibold text-base normal-case">Rewards</a>
+            </li>
+            <li class="mx-3 py-6 md:py-0 nav-link fromLeft">
+              <a href="faq.html" class="text-white font-semibold text-base">FAQ</a>
+            </li>
+          </ul>
+        </div>
+        <!-- END: Menu hamburger wrapper -->
+
+        <!-- START: pembatas -->
+        <div class="w-full"></div>
+        <!-- END: pembatas -->
+
+        <!-- START: Hamburger and cart icon-->
+        <div class="w-auto">
+          <ul class="flex items-center">
+            <li class="ml-6 block md:hidden">
+              <button id="menu-toggler"
+                class="relative flex z-50 items-center justify-center w-8 h-8 text-black  hover:text-white focus:outline-none">
+                <svg width="18" height="17" viewBox="0 0 18 17" fill="none" xmlns="http://www.w3.org/2000/svg"
+                  class="fill-current">
+                  <path
+                    d="M15.9773 0H1.04219C0.466585 0 0 0.279408 0 0.6241C0 0.968792 0.466668 1.2482 1.04219 1.2482H15.9773C16.5529 1.2482 17.0195 0.968792 17.0195 0.6241C17.0195 0.279358 16.5529 0 15.9773 0Z" />
+                  <path
+                    d="M15.9773 6.13794H1.04219C0.466585 6.13794 0 6.41735 0 6.76204C0 7.10673 0.466668 7.38614 1.04219 7.38614H15.9773C16.5529 7.38614 17.0195 7.10673 17.0195 6.76204C17.0195 6.4173 16.5529 6.13794 15.9773 6.13794Z" />
+                  <path
+                    d="M15.9773 12.2761H1.04219C0.466585 12.2761 0 12.5555 0 12.9002C0 13.2449 0.466668 13.5243 1.04219 13.5243H15.9773C16.5529 13.5243 17.0195 13.2449 17.0195 12.9002C17.0195 12.5555 16.5529 12.2761 15.9773 12.2761Z" />
+                </svg>
+              </button>
+            </li>
+            <li class="hidden md:block mr-8">
+              <div class="flex flex-row items-center justify-end">
+                <img src="../images/design/points.png" alt="display picture" class="dp rounded-full mr-1 ">
+                <span class="text-base font-semibold text-yellow-400 whitespace-nowrap">500 pts</span>
+              </div>
+            </li>
+
+            <li class="mr-5 hidden md:block dropdown h-full px-2 ">
+              <!-- <a href="cart.html" class="streched-link"> -->
+              <div class="flex flex-row items-center justify-start h-full dropbtn">
+                <img src="../images/content/bima.jpg" alt="display picture" class="dp rounded-full mr-1 ">
+                <span class="text-base text-white font-semibold">Putra</span>
+
+              </div>
+
+              <div class="dropdown-content rounded">
+                <a href="user-profile.html"
+                  class="border-b-2 border-red-800 hover:text-red-800 font-semibold text-base">Profil</a>
+                <a href="#" class="hover:text-red-800 font-semibold text-base">Logout</a>
+              </div>
+
+              <!-- </a> -->
+            </li>
+          </ul>
+        </div>
+        <!-- END: Hamburger and cart icon -->
+      </div>
+    </div>
+  </header>
+  <!-- END: Header -->
+
+  <!-- START: Section Hero -->
+  <section class="flex items-center hero bg-purple-100">
+    <!-- template for set gradient : bg-gradient-to-r from-white via-current to-white-99 -->
+    <!-- START: Hero section | Left side -->
+    <div
+      class="w-full absolute z-20 text-center flex flex-col justify-center inset-0 md:relative md:w-1/2 hero-caption mt-14">
+      <h1 class="text-3xl md:text-5xl leading-tight font-semibold">
+        Upload Strukmu <br class="" />di Sini
+      </h1>
+      <!-- <h2 class="px-8 text-base md:px-0 md:text-lg my-6 tracking-wide">
+        kami menyediakan furniture berkelas <br class="hidden lg:block"/>yang membuat ruangan terasa homey
+      </h2> -->
+      <div>
+        <a href="#browse-the-room"
+          class="bg-purple-400 text-black hover:bg-black hover:text-purple-400 rounded-3xl px-8 pb-5 py-4 mt-4 inline-block flex-none transition duration-200 text-3xl font-semibold">Upload
+          Struk</a>
+      </div>
+    </div>
+    <!-- END: Hero section | Left side -->
+
+    <!-- START: Hero section | Right side  -->
+    <div class="w-full inset-0 md:relative md:w-1/2 mt-14">
+      <div class="relative hero-image">
+        <!-- pada class "overlay" dibikin sebagai custom class -->
+        <div class="overlay inset-0 bg-black opacity-30 z-10"></div>
+        <!-- bagian button dihilangkan semua. asalnya dari luxspace -->
+        <img src="../images/content/Banner-Mengapa-Huggies.jpg" alt="living room with sofa and some plants"
+          class="absolute inset-0 md:relative h-full object-cover object-center md:h-96 md:w-full">
+      </div>
+    </div>
+    <!-- END: Hero section | Right side  -->
+
+  </section>
+  <!-- END: Section Hero -->
+
+
+  <!-- START: Redeem Suggestion -->
+  <section class="flex bg-gray-100 pb-16 pt-8 px-4">
+    <div class="container mx-auto">
+      <!-- start: H3 browse the room -->
+      <div class="flex flex-start mb-4">
+        <h2 class="capitalize text-3xl md:text-5xl leading-tight font-semibold">
+          Grandprize
+        </h2>
+      </div>
+      <!-- end: H3 browse the room -->
+
+
+      <!-- start: carousel item redeem -->
+      <div class="grid grid-cols-6 gap-3">
+        <div class="relative col-span-6 md:col-span-3 card" style="height: 290px;">
+          <div class="card-shadow rounded-md">
+            <img src="../images/content/banner.jpg" alt=""
+              class="h-full w-full object-cover overlay overflow-hidden rounded-md">
+          </div>
+          <div class="overlay inset-0 flex justify-center flex-col md:pl-11 pl-56 ">
+            <span class="md:text-5xl md:font-medium md:mb-2 text-lg font-semibold">
+              GRAND
+            </span>
+            <span class="md:text-7xl md:font-extrabold text-lg tracking-wider">PRIZE</span>
+          </div>
+          <a href="grand-prize.html" class="streched-link"></a>
+        </div>
+
+        <div class="relative col-span-6 md:col-span-1 card md:block hidden parent">
+          <div class="card-shadow rounded-lg child">
+            <img src="../images/content/air-fryer.jpg" alt=""
+              class="h-2/3 w-full object-cover overlay overflow-hidden rounded-t-lg">
+          </div>
+          <div
+            class="overlay inset-0 flex justify-end flex-col pl-56 md:items-center md:pl-0 md:pb-6 hover:transform-gpu scale-150 child">
+            <h5 class="text-lg font-semibold">
+              Living Room
+            </h5>
+            <span class="">18.307 items</span>
+          </div>
+          <a href="grand-prize.html" class="streched-link child"></a>
+        </div>
+
+        <div class="relative col-span-6 md:col-span-1 card md:block hidden parent">
+          <div class="card-shadow rounded-lg child">
+            <img src="../images/content/kulkas.jpg" alt=""
+              class="h-2/3 w-full object-cover overlay overflow-hidden rounded-t-lg">
+          </div>
+          <div
+            class="overlay inset-0 flex justify-end flex-col pl-56 md:items-center md:pl-0 md:pb-6 hover:transform-gpu scale-150 child">
+            <h5 class="text-lg font-semibold">
+              Living Room
+            </h5>
+            <span class="">18.307 items</span>
+          </div>
+          <a href="grand-prize.html" class="streched-link child"></a>
+        </div>
+
+        <div class="relative col-span-6 md:col-span-1 card md:block hidden parent">
+          <div class="card-shadow rounded-lg child">
+            <img src="../images/content/microwave-cover.jpg" alt=""
+              class="h-2/3 w-full object-cover overlay overflow-hidden rounded-t-lg">
+          </div>
+          <div
+            class="overlay inset-0 flex justify-end flex-col pl-56 md:items-center md:pl-0 md:pb-6 hover:transform-gpu scale-150 child">
+            <h5 class="text-lg font-semibold">
+              Living Room
+            </h5>
+            <span class="">18.307 items</span>
+          </div>
+          <a href="grand-prize.html" class="streched-link child"></a>
+        </div>
+
+      </div>
+      <!-- end: carousel item redeem -->
+
+
+      <!-- start: H3 browse the room -->
+      <div class="flex flex-start mb-4 md:mt-7">
+        <h2 class="capitalize text-3xl md:text-5xl leading-tight font-semibold">
+          Redeem Pointmu !!
+        </h2>
+      </div>
+      <!-- end: H3 browse the room -->
+      <!-- start: carousel item redeem -->
+      <div class="grid grid-cols-6 gap-2">
+        <div class="relative col-span-6 md:col-span-2 card" style="height: 300px;">
+          <div class="card-shadow rounded-xl h-full">
+            <img src="../images/content/image-4.png" alt=""
+              class="h-full object-cover overlay overflow-hidden rounded-xl flex justify-start">
+          </div>
+          <div class="overlay inset-0 flex justify-center flex-col md:pl-44 pl-56 ">
+            <span class="md:text-4xl md:font-medium text-lg font-semibold">
+              TUKAR
+            </span>
+            <span class="md:text-7xl md:font-extrabold text-lg text">POIN</span>
+          </div>
+          <a href="prizes.html" class="streched-link"></a>
+        </div>
+        <div class="relative col-span-6 md:col-span-1 card md:block hidden parent">
+          <div class="card-shadow rounded-lg child">
+            <img src="../images/content/tuppy.jpg" alt=""
+              class="h-2/3 object-cover overlay overflow-hidden rounded-t-lg">
+          </div>
+          <div
+            class="overlay inset-0 flex justify-end flex-col pl-56 md:items-center md:pl-0 md:pb-6 hover:transform-gpu scale-150 child">
+            <h5 class="text-lg font-semibold">
+              Living Room
+            </h5>
+            <span class="">18.307 items</span>
+          </div>
+          <a href="prizes.html" class="streched-link child"></a>
+        </div>
+
+
+        <div class="relative col-span-6 md:col-span-1 card md:block hidden parent">
+          <div class="card-shadow rounded-lg child">
+            <img src="../images/content/tupperware-set.png" alt=""
+              class="h-2/3 object-cover overlay overflow-hidden rounded-t-lg">
+          </div>
+          <div
+            class="overlay inset-0 flex justify-end flex-col pl-56 md:items-center md:pl-0 md:pb-6 hover:transform-gpu scale-150 child">
+            <h5 class="text-lg font-semibold">
+              Living Room
+            </h5>
+            <span class="">18.307 items</span>
+          </div>
+          <a href="prizes.html" class="streched-link child"></a>
+        </div>
+
+        <div class="relative col-span-6 md:col-span-1 card md:block hidden parent">
+          <div class="card-shadow rounded-lg child">
+            <img src="../images/content/maxim-valentino.jpg" alt=""
+              class="h-2/3 object-cover overlay overflow-hidden rounded-t-lg">
+          </div>
+          <div
+            class="overlay inset-0 flex justify-end flex-col pl-56 md:items-center md:pl-0 md:pb-6 hover:transform-gpu scale-150 child">
+            <h5 class="text-lg font-semibold">
+              Living Room
+            </h5>
+            <span class="">18.307 items</span>
+          </div>
+          <a href="prizes.html" class="streched-link child"></a>
+        </div>
+
+        <div class="relative col-span-6 md:col-span-1 card md:block hidden parent">
+          <div class="card-shadow rounded-lg child">
+            <img src="../images/content/blender-lucu.jpeg" alt=""
+              class="h-2/3 object-cover overlay overflow-hidden rounded-t-lg">
+          </div>
+          <div
+            class="overlay inset-0 flex justify-end flex-col pl-56 md:items-center md:pl-0 md:pb-6 hover:transform-gpu scale-150 child">
+            <h5 class="text-lg font-semibold">
+              Living Room
+            </h5>
+            <span class="">18.307 items</span>
+          </div>
+          <a href="prizes.html" class="streched-link child"></a>
+        </div>
+
+      </div>
+      <!-- end: carousel item redeem -->
+    </div>
+
+  </section>
+  <!-- END: Redeem Suggestion -->
+
+  <!-- START : Footer / Aside menu -->
+  <section>
+    <div class="border-t border-b border-gray-200 py-4 px-4">
+      <div class="flex justify-center mb-4">
+        <img src="images/design/logo.png" alt="luxspace belajar bikin web">
+      </div>
+      <aside class="container mx-auto">
+        <div class="flex flex-wrap md:space-x-4 justify-center">
+          <!-- START: item aside 1 -->
+          <div class="w-full md:w-2/12 mb-4 md:mb-0 accordion">
+            <h5 class="text-base font-semibold mb-2 relative">Overview</h5>
+            <ul class="h-0 invisible md:h-auto md:visible overflow-hidden">
+              <li>
+                <a href="#" class="hover:underline py-1 block text-sm">Shipping</a>
+              </li>
+              <li>
+                <a href="#" class="hover:underline py-1 block text-sm">Refund</a>
+              </li>
+              <li>
+                <a href="#" class="hover:underline py-1 block text-sm">Promotion</a>
+              </li>
+            </ul>
+
+          </div>
+          <!-- START: item aside 1 -->
+          <!-- START: item aside 2 -->
+          <div class="w-full md:w-2/12 mb-4 md:mb-0 accordion">
+            <h5 class="text-base font-semibold mb-2 relative">Company</h5>
+            <ul class="h-0 invisible md:h-auto md:visible overflow-hidden">
+              <li>
+                <a href="#" class="hover:underline py-1 block text-sm">About</a>
+              </li>
+              <li>
+                <a href="#" class="hover:underline py-1 block text-sm">Career</a>
+              </li>
+              <li>
+                <a href="#" class="hover:underline py-1 block text-sm">Contact Us</a>
+              </li>
+            </ul>
+
+          </div>
+          <!-- START: item aside 2 -->
+          <!-- START: item aside 3 -->
+          <div class="w-full md:w-2/12 mb-4 md:mb-0 accordion">
+            <h5 class="text-base font-semibold mb-2 relative">Explore</h5>
+            <ul class="h-0 invisible md:h-auto md:visible overflow-hidden">
+              <li>
+                <a href="#" class="hover:underline py-1 block text-sm">Terms & Conds</a>
+              </li>
+              <li>
+                <a href="#" class="hover:underline py-1 block text-sm">Privacy Policy</a>
+              </li>
+              <li>
+                <a href="#" class="hover:underline py-1 block text-sm">For Developer</a>
+              </li>
+            </ul>
+
+          </div>
+          <!-- START: item aside 3 -->
+
+          <!-- start item aside 5 -->
+          <div class="w-full md:w-3/12 mb-4 md:mb-0">
+            <h5 class="text-base font-semibold mb-0 relative">Follow Us </h5>
+
+            <div class="flex flex-row mb-4">
+              <i class="fab fa-facebook-square text-3xl mr-2 text-gray-500"></i>
+              <i class="fab fa-youtube text-3xl mr-2 text-gray-500"></i>
+              <i class="fab fa-instagram text-3xl mr-2 text-gray-500"></i>
+              <i class="fab fa-twitter text-3xl mr-2 text-gray-500"></i>
+            </div>
+
+            <h5 class="text-base font-semibold mb-0 relative">Special Letter</h5>
+            <form action="#">
+              <label class="relative w-full">
+                <input type="text" class="bg-gray-100 rounded-lg py-1 px-5 w-10/12 focus:outline-none"
+                  placeholder="Your email addres" />
+                <button class="bg-pink-400 absolute rounded-lg right-0 p-2">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path
+                      d="M23.6177 0.411971C23.6163 0.410624 23.6152 0.409187 23.6138 0.407839C23.6124 0.406492 23.6109 0.405414 23.6095 0.404157C23.236 0.049307 22.7002 -0.0573008 22.2098 0.126411L0.833871 8.13353C0.268743 8.34518 -0.0623361 8.87521 0.0098048 9.4523C0.0821332 10.0294 0.53462 10.4694 1.13589 10.547L11.5833 11.8968C11.6028 11.8994 11.6185 11.9143 11.6212 11.9332L13.0301 21.9417C13.1112 22.5177 13.5704 22.9512 14.1729 23.0204C14.2279 23.0268 14.2824 23.0298 14.3364 23.0298C14.8735 23.0298 15.3486 22.7229 15.5495 22.231L23.9077 1.75274C24.0994 1.28302 23.9882 0.76983 23.6177 0.411971ZM1.30534 9.34475C1.2819 9.34169 1.27136 9.34039 1.26728 9.30788C1.26325 9.27537 1.27319 9.27159 1.29508 9.26347L21.2946 1.77187L11.9404 10.7333C11.8794 10.7163 1.30534 9.34475 1.30534 9.34475ZM14.37 21.7892C14.3614 21.8102 14.358 21.8198 14.3236 21.8158C14.2897 21.8119 14.2883 21.8017 14.2852 21.7794C14.2852 21.7794 12.8535 11.6495 12.8358 11.5911L22.19 2.62972L14.37 21.7892Z"
+                      fill="white" />
+                  </svg>
+
+                </button>
+              </label>
+            </form>
+          </div>
+
+          <!-- end item aside 5 -->
+        </div>
+      </aside>
+    </div>
+  </section>
+  <!-- END : Footer / Aside menu -->
+
+  <!-- percobaan modal -->
+  <!-- so far berhasil tapi tampilannya jelek banget. bisa dicoba lagi next dengan tampilan lebih bagus lagi -->
+  <!-- <div id="id01" class="w3-modal">
+    <div class="w3-modal-content w3-card-4">
+      <header class="w3-container w3-teal">
+        <span onclick="document.getElementById('id01').style.display='none'"
+          class="w3-button w3-display-topright">&times;</span>
+        <h2>Modal Header</h2>
+      </header>
+      <div class="w3-container">
+        <p>You have two options to close this modal:</p>
+        <p>Click on the "x" or click anywhere outside of the modal!</p>
+      </div>
+      <footer class="w3-container w3-teal">
+        <p>Modal Footer</p>
+      </footer>
+    </div>
+  </div> -->
+
+  <!-- START: Footer -->
+  <footer class="flex text-center px-4 py-3 justify-center">
+    <p class="text-sm">Copyright 2021 • All Rights Reserved Huggies Demo by BimaPutra</p>
+  </footer>
+  <!-- END: Footer -->
+
+
+  <!-- percobaan modal -->
+  <script>
+    // Get the modal
+    var modal = document.getElementById('id01');
+
+    // When the user clicks anywhere outside of the modal, close it
+    window.onclick = function (event) {
+      if (event.target == modal) {
+        modal.style.display = "none";
+      }
+    }
+  </script>
+
+
+  <!-- Google Analytics: change UA-XXXXX-Y to be your site's ID. -->
+  <script>
+    window.ga = function () {
+      ga.q.push(arguments);
+    };
+    ga.q = [];
+    ga.l = +new Date();
+    ga("create", "UA-XXXXX-Y", "auto");
+    ga("set", "anonymizeIp", true);
+    ga("set", "transport", "beacon");
+    ga("send", "pageview");
+  </script>
+  <script src="https://www.google-analytics.com/analytics.js" async></script>
+</body>
+
+</html>

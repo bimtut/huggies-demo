@@ -1,0 +1,10 @@
+import "../css/app.css"
+import "./menu-toggler"
+import "./modal"
+import "./modal-onload"
+import "./smooth-anchor-link"
+
+import "./accordion"
+import "./accordion-faq"
+import "./accordion-new"
+import "./slider"

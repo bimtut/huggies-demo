@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <title>Upload Hadiah - Huggies Admin</title>
+    <!-- katanya description menunjukan keterangan web yang akan bantu pencarian oleh botnya google -->
+    <meta name="description" content="Demo untuk microsite huggies" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="author" content="Bima Putra">
+
+    <!-- OG Tag membantu pembuatan link share dari facebook -->
+    <meta property="og:title" content="Huggies Indonesia" />
+    <meta property="og:type" content="popok untuk anak negeri" />
+    <meta property="og:url" content="" />
+    <meta property="og:image" content="" />
+
+    <link rel="manifest" href="site.webmanifest" />
+    <link rel="apple-touch-icon" href="images/favicon.ico" />
+    <!-- Place favicon.ico in the root directory -->
+
+    <link rel="stylesheet" href="./css/app.minify.css" />
+    <link rel="icon" href="images/favicon.ico" />
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.2/css/all.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.2/css/v4-shims.css">
+
+    <!-- ngefek ke tampilan warna tab di android phone. bagus untuk branding -->
+    <meta name="theme-color" content="#B91C1C" />
+
+    <!-- Tailwind -->
+    <link href="https://unpkg.com/tailwindcss/dist/tailwind.min.css" rel="stylesheet">
+    <style>
+        @import url('https://fonts.googleapis.com/css?family=Karla:400,700&display=swap');
+
+        .font-family-karla {
+            font-family: karla;
+        }
+
+        .bg-sidebar {
+            background: #da291c;
+        }
+
+        /* cta-btn dan account-link:hover warnanya biasanya samaan */
+        .cta-btn {
+            color: #da291c;
+        }
+
+        .upgrade-btn {
+            background: #1947ee;
+        }
+
+        .upgrade-btn:hover {
+            background: #0038fd;
+        }
+
+        .active-nav-link {
+            background: #b32d0e;
+        }
+
+        .nav-item:hover {
+            background: #a3290d;
+        }
+
+        .account-link:hover {
+            background: #da291c;
+        }
+    </style>
+</head>
+
+<body class="bg-gray-100 font-family-karla flex">
+
+    <aside class="relative bg-sidebar h-screen w-72 hidden sm:block shadow-xl">
+        <div class="p-6">
+            <a href="admin-dashboard.html"
+                class="text-white text-3xl font-semibold uppercase hover:text-gray-300">Admin</a>
+        </div>
+        <nav class="text-white text-base font-semibold pt-3">
+            <a href="admin-dashboard.html" class="flex items-center text-white py-4 pl-6 nav-item">
+                <i class="fas fa-tachometer-alt mr-3"></i>
+                Dashboard
+            </a>
+            <a href="admin-tabs.html" class="flex items-center text-white opacity-75 hover:opacity-100 py-4 pl-6 nav-item">
+                <i class="fas fa-tablet-alt mr-3"></i>
+                CMS
+            </a>
+            <a href="admin-validations.html" class="flex items-center text-white opacity-75 hover:opacity-100 py-4 pl-6 nav-item">
+                <i class="fas fa-align-left mr-3"></i>
+                Struk Validation
+            </a>
+            <a href="admin-upload.html" class="active-nav-link flex items-center text-white opacity-75 hover:opacity-100 py-4 pl-6 nav-item">
+                <i class="fas fa-table mr-3"></i>
+                Upload Prize
+            </a>
+        </nav>
+    </aside>
+
+    <div class="relative w-full flex flex-col h-screen overflow-y-hidden">
+        <!-- Desktop Header -->
+        <header class="w-full items-center bg-white py-2 px-6 hidden sm:flex">
+            <div class="w-1/2"></div>
+            <div x-data="{ isOpen: false }" class="relative w-1/2 flex justify-end">
+                <button @click="isOpen = !isOpen"
+                    class="realtive z-10 w-12 h-12 rounded-full overflow-hidden border-4 border-gray-400 hover:border-gray-300 focus:border-gray-300 focus:outline-none">
+                    <img src="https://source.unsplash.com/uJ8LNVCBjFQ/400x400">
+                </button>
+                <button x-show="isOpen" @click="isOpen = false"
+                    class="h-full w-full fixed inset-0 cursor-default"></button>
+                <div x-show="isOpen" class="absolute w-32 bg-white rounded-lg shadow-lg py-2 mt-16">
+                    <a href="#" class="block px-4 py-2 account-link hover:text-white">Account</a>
+                    <a href="#" class="block px-4 py-2 account-link hover:text-white">Support</a>
+                    <a href="#" class="block px-4 py-2 account-link hover:text-white">Sign Out</a>
+                </div>
+            </div>
+        </header>
+
+        <!-- Mobile Header & Nav -->
+        <header x-data="{ isOpen: false }" class="w-full bg-sidebar py-5 px-6 sm:hidden">
+            <div class="flex items-center justify-between">
+                <a href="admin-dashboard.html"
+                    class="text-white text-3xl font-semibold uppercase hover:text-gray-300">Admin</a>
+                <button @click="isOpen = !isOpen" class="text-white text-3xl focus:outline-none">
+                    <i x-show="!isOpen" class="fas fa-bars"></i>
+                    <i x-show="isOpen" class="fas fa-times"></i>
+                </button>
+            </div>
+
+            <!-- Dropdown Nav -->
+            <nav :class="isOpen ? 'flex': 'hidden'" class="flex flex-col pt-4">
+                <a href="admin-dashboard.html"
+                    class="flex items-center text-white opacity-75 hover:opacity-100 py-2 pl-4 nav-item">
+                    <i class="fas fa-tachometer-alt mr-3"></i>
+                    Dashboard
+                </a>
+                <a href="blank.html"
+                    class="flex items-center text-white opacity-75 hover:opacity-100 py-2 pl-4 nav-item">
+                    <i class="fas fa-sticky-note mr-3"></i>
+                    Blank Page
+                </a>
+                <a href="tables.html"
+                    class="flex items-center text-white opacity-75 hover:opacity-100 py-2 pl-4 nav-item">
+                    <i class="fas fa-table mr-3"></i>
+                    Tables
+                </a>
+                <a href="forms.html"
+                    class="flex items-center text-white opacity-75 hover:opacity-100 py-2 pl-4 nav-item">
+                    <i class="fas fa-align-left mr-3"></i>
+                    Forms
+                </a>
+                <a href="tabs.html" class="flex items-center active-nav-link text-white py-2 pl-4 nav-item">
+                    <i class="fas fa-tablet-alt mr-3"></i>
+                    CMS
+                </a>
+                <a href="calendar.html"
+                    class="flex items-center text-white opacity-75 hover:opacity-100 py-2 pl-4 nav-item">
+                    <i class="fas fa-calendar mr-3"></i>
+                    Calendar
+                </a>
+                <a href="#" class="flex items-center text-white opacity-75 hover:opacity-100 py-2 pl-4 nav-item">
+                    <i class="fas fa-cogs mr-3"></i>
+                    Support
+                </a>
+                <a href="#" class="flex items-center text-white opacity-75 hover:opacity-100 py-2 pl-4 nav-item">
+                    <i class="fas fa-user mr-3"></i>
+                    My Account
+                </a>
+                <a href="#" class="flex items-center text-white opacity-75 hover:opacity-100 py-2 pl-4 nav-item">
+                    <i class="fas fa-sign-out-alt mr-3"></i>
+                    Sign Out
+                </a>
+
+            </nav>
+            <!-- <button class="w-full bg-white cta-btn font-semibold py-2 mt-5 rounded-br-lg rounded-bl-lg rounded-tr-lg shadow-lg hover:shadow-xl hover:bg-gray-300 flex items-center justify-center">
+                <i class="fas fa-plus mr-3"></i> New Report
+            </button> -->
+        </header>
+
+        <div class="w-full h-screen overflow-x-hidden border-t flex flex-col">
+            <main class="w-full flex-grow p-6">
+                <h1 class="text-3xl text-black pb-6">Upload New Product(s)</h1>
+
+                <div class="w-full mt-6" x-data="{ openTab: 1 }">
+                    <div>
+                        <ul class="flex border-b">
+                            <li class="-mb-px mr-1" @click="openTab = 1">
+                                <a :class="openTab === 1 ? 'border-l border-t border-r rounded-t text-red-700 font-semibold' : 'text-red-500 hover:text-red-800'"
+                                    class="bg-white inline-block py-2 px-4 font-semibold" href="#">Grand Prize</a>
+                            </li>
+                            <li class="mr-1" @click="openTab = 2">
+                                <a :class="openTab === 2 ? 'border-l border-t border-r rounded-t text-red-700 font-semibold' : 'text-red-500 hover:text-red-800'"
+                                    class="bg-white inline-block py-2 px-4 font-semibold" href="#">Usual Prize</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="bg-white p-6">
+                        <div id="" class="" x-show="openTab === 1">
+                            <div class="flex flex-wrap">
+                                <div class="w-full lg:w-1/2 my-6 pr-0 lg:pr-2">
+                                    <p class="text-xl pb-6 flex items-center">
+                                        <i class="fas fa-list mr-3"></i> Product Information
+                                    </p>
+                                    <div class="leading-loose  border-gray-100 border-2">
+                                        <form class="p-10 bg-white rounded shadow-xl">
+
+                                            <div class="">
+                                                <label class="block text-sm text-gray-600" for="cus_name">Name</label>
+                                                <input class="w-full px-2 py-2 text-gray-700 bg-gray-200 rounded"
+                                                    id="cus_name" name="cus_name" type="text" required=""
+                                                    placeholder="Product Name" aria-label="Name">
+                                            </div>
+                                            <div class="mt-2">
+                                                <label class="block text-sm text-gray-600" for="cus_email">Price</label>
+                                                <input class="w-full px-2  py-2 text-gray-700 bg-gray-200 rounded"
+                                                    id="cus_email" name="cus_email" type="text" required=""
+                                                    placeholder="Product Price" aria-label="Email">
+                                            </div>
+                                            <div class="mt-2">
+                                                <label class="block text-sm text-gray-600" for="cus_email">Foto
+                                                    Product</label>
+                                                <button
+                                                    class="px-4 mr-1 py-1 text-white font-light tracking-wider bg-green-600 rounded"
+                                                    type="submit">upload foto</button>
+                                            </div>
+
+                                            <div class="mt-2">
+                                                <label class=" block text-sm text-gray-600"
+                                                    for="message">Description</label>
+                                                <textarea class="w-full px-5 py-2 text-gray-700 bg-gray-200 rounded"
+                                                    id="message" name="message" rows="6" required=""
+                                                    placeholder="Product description.." aria-label="Email"></textarea>
+                                            </div>
+                                            <div class="mt-6 flex flex-row">
+                                                <button
+                                                    class="px-4 mr-1 py-1 text-white font-light tracking-wider bg-red-700 rounded"
+                                                    type="submit">simpan</button>
+                                                <button
+                                                    class="px-4 ml-1 py-1 text-white font-light tracking-wider bg-gray-600 rounded"
+                                                    type="submit">buang</button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+
+                                <div class="w-full lg:w-1/2 mt-6 pl-0 lg:pl-2">
+                                    <p class="text-xl pb-12 flex items-center">
+                                        <!-- <i class="fas fa-list mr-3"></i> Product Information -->
+                                    </p>
+                                    <div class="leading-loose  border-gray-100 border-2">
+                                        <form class="p-10 bg-white rounded shadow-xl mt-1">
+                                            <div class="">
+                                                <label class="block text-sm text-gray-600 " for="cus_name">Image
+                                                    Preview</label>
+                                                <p
+                                                    class="bg-gray-200 flex justify-center rounded items-center px-10 py-24 text-gray-400">
+                                                    Image Preview</p>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div id="" class="" x-show="openTab === 2">
+                            <div class="flex flex-wrap">
+                                <div class="w-full lg:w-1/2 my-6 pr-0 lg:pr-2">
+                                    <p class="text-xl pb-6 flex items-center">
+                                        <i class="fas fa-list mr-3"></i> Product Information
+                                    </p>
+                                    <div class="leading-loose  border-gray-100 border-2">
+                                        <form class="p-10 bg-white rounded shadow-xl">
+
+                                            <div class="">
+                                                <label class="block text-sm text-gray-600" for="cus_name">Name</label>
+                                                <input class="w-full px-2 py-2 text-gray-700 bg-gray-200 rounded"
+                                                    id="cus_name" name="cus_name" type="text" required=""
+                                                    placeholder="Product Name" aria-label="Name">
+                                            </div>
+                                            <div class="mt-2">
+                                                <label class="block text-sm text-gray-600" for="cus_email">Price</label>
+                                                <input class="w-full px-2  py-2 text-gray-700 bg-gray-200 rounded"
+                                                    id="cus_email" name="cus_email" type="text" required=""
+                                                    placeholder="Product Price" aria-label="Email">
+                                            </div>
+                                            <div class="mt-2">
+                                                <label class="block text-sm text-gray-600" for="cus_email">Foto
+                                                    Product</label>
+                                                <button
+                                                    class="px-4 mr-1 py-1 text-white font-light tracking-wider bg-green-600 rounded"
+                                                    type="submit">upload foto</button>
+                                            </div>
+
+                                            <div class="mt-2">
+                                                <label class=" block text-sm text-gray-600"
+                                                    for="message">Description</label>
+                                                <textarea class="w-full px-5 py-2 text-gray-700 bg-gray-200 rounded"
+                                                    id="message" name="message" rows="6" required=""
+                                                    placeholder="Product description.." aria-label="Email"></textarea>
+                                            </div>
+                                            <div class="mt-6 flex flex-row">
+                                                <button
+                                                    class="px-4 mr-1 py-1 text-white font-light tracking-wider bg-red-700 rounded"
+                                                    type="submit">simpan</button>
+                                                <button
+                                                    class="px-4 ml-1 py-1 text-white font-light tracking-wider bg-gray-600 rounded"
+                                                    type="submit">buang</button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+
+                                <div class="w-full lg:w-1/2 mt-6 pl-0 lg:pl-2">
+                                    <p class="text-xl pb-12 flex items-center">
+                                        <!-- <i class="fas fa-list mr-3"></i> Product Information -->
+                                    </p>
+                                    <div class="leading-loose  border-gray-100 border-2">
+                                        <form class="p-10 bg-white rounded shadow-xl mt-1">
+                                            <div class="">
+                                                <label class="block text-sm text-gray-600 " for="cus_name">Image
+                                                    Preview</label>
+                                                <p
+                                                    class="bg-gray-200 flex justify-center rounded items-center px-10 py-24 text-gray-400">
+                                                    Image Preview</p>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+
+    </div>
+
+    <!-- AlpineJS -->
+    <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js" defer></script>
+    <!-- Font Awesome -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/js/all.min.js"
+        integrity="sha256-KzZiKy0DWYsnwMF+X1DvQngQ2/FxF7MF3Ff72XcpuPs=" crossorigin="anonymous"></script>
+</body>
+
+</html>

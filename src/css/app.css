@@ -1,0 +1,356 @@
+@import url("https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600&display=swap");
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+  .dp {
+    /* height: 16px;
+    width: 16px; */
+    @apply h-8 w-8;
+  }
+
+  .overlay {
+    @apply absolute;
+  }
+
+  /* apapun element setelah overlay (g tau maksudnya setelah ini apakah class childnya overlay atau apa) */
+  .overlay * {
+    @apply transition-all duration-200;
+  }
+
+  .overlay.hoverable > * {
+    @apply opacity-0;
+  }
+  /* modifier dari overlay yang namanya hoverable (class overlay yang juga punya class hoverable) */
+  /* <div class="overlay hoverable /> */
+  .overlay.hoverable:hover > * {
+    /* "> *" adalah target untuk semua child pertama */
+    @apply opacity-100;
+  }
+
+  /* .overlay .video {
+    @apply absolute transform bg-blue-200 bg-no-repeat bg-center  rounded-full flex items-center justify-center;
+    background-image: url("../images/design/icon-play.svg");
+    top: 50%;
+    left: 50%;
+  } */
+
+  .parent:hover .child,
+  .parent:focus .child {
+    transform: scale(1.01);
+    transition-duration: 0.2s;
+  }
+
+  .hero .hero-image,
+  .hero .hero-caption {
+    min-height: 90vh;
+  }
+  .hero .hero-cta {
+    @apply w-12 h-12;
+    transform: translateX(-75px) translateY(-50%);
+    background-size: 37.5%;
+  }
+
+  .card .card-shadow {
+    @apply transition duration-200 shadow-md h-full;
+  }
+
+  .card:hover .card-shadow {
+    @apply shadow-xl;
+  }
+
+  /* for breadcrumb */
+  ul.breadcrumb {
+    /* target: tag ul yang punya class breadcrumb */
+    @apply flex flex-row items-center text-lg;
+  }
+
+  ul.breadcrumb li:not(:last-child):after {
+    /* target : semua li tag childnya ul, kecuali yang last child dari ul nya */
+    content: "/";
+    @apply px-4;
+  }
+
+  ul.breadcrumb li:not(:last-child) a {
+    @apply font-light;
+  }
+
+  ul.breadcrumb li:last-child a {
+    @apply font-semibold;
+  }
+
+  /* FOR SLIDESHOW/SLIDER PRODUCT */
+  .slider {
+    @apply flex my-4 flex-col;
+  }
+
+  .slider .thumbnail {
+    @apply w-screen order-last -mx-2 overflow-auto flex pl-4;
+  }
+
+  .slider .thumbnail .item {
+    @apply rounded-lg bg-gray-100 relative mb-4 cursor-pointer w-28 h-28;
+    /* width: 106px; height: 106px; */
+    /* aku ganti jadi ukuran w- dan h- 26 karena dia pake rem. cu,an dapetnya 104px */
+  }
+
+  /* ini bikin semacam bayangan atau block warna gitu */
+  .slider .thumbnail .item:after {
+    content: "";
+    @apply transition duration-200 absolute inset-0 bg-black opacity-0 border-2 border-black border-opacity-0 rounded-lg;
+  }
+
+  .slider .thumbnail .item.selected:after {
+    @apply bg-opacity-35 border-opacity-100;
+  }
+
+  .slider .preview {
+    @apply mb-4 px-4 h-96 w-96;
+    /* height: 320px; */
+  }
+
+  /* The dropdown container */
+  .dropdown {
+    float: left;
+  }
+
+  .dropdown .dropbtn {
+    /* font-size: 14px; */
+    border: none;
+    outline: none;
+    color: white;
+    background-color: inherit;
+    font-family: inherit; /* Important for vertical align on mobile phones */
+    @apply px-4 py-1 m-0;
+  }
+
+  /* Dropdown content (hidden by default) */
+  .dropdown-content {
+    display: none;
+    /* transition: all 0.1s; */
+    margin-right: 20px;
+    position: absolute;
+    right: 1rem;
+    /* background-color: #f9f9f9; */
+    /* min-width: 280px; */
+    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+    z-index: 5;
+    @apply mr-4 w-32 bg-red-700 opacity-90;
+  }
+
+  /* Links inside the dropdown */
+  .dropdown-content a {
+    float: none;
+    color: white;
+    /* padding: 12px 16px; */
+    text-decoration: none;
+    display: block;
+    text-align: right;
+    @apply p-2 pr-4;
+  }
+
+  /* Add a grey background color to dropdown links on hover */
+  .dropdown-content a:hover {
+    background-color: #ddd;
+    @apply rounded;
+  }
+
+  /* Show the dropdown menu on hover */
+  .dropdown:hover .dropdown-content {
+    display: block;
+  }
+
+  /* make hidden scrollbar */
+  .hidden-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+
+  /* Hide scrollbar for IE, Edge and Firefox */
+  .hidden-scrollbar {
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+  }
+
+  /* coba animasi line bottom */
+  .nav-link {
+    color: #666;
+    display: inline-block;
+    margin: 0;
+    text-transform: uppercase;
+  }
+
+  .nav-link:after {
+    display: block;
+    content: "";
+    /* border-bottom: solid 3px #019fb6;   */
+    transform: scaleX(0);
+    transition: transform 100ms ease-in-out;
+    @apply border-b-3 border-red-100;
+  }
+  .nav-link:hover:after {
+    transform: scaleX(1);
+  }
+  .nav-link.fromLeft:after {
+    transform-origin: 0% 50%;
+  }
+
+  /* ==== ACCORDION FAQ NEW ==== */
+  /*FAQ section, where the accordion is kept, including section specific css*/
+  #faq {
+    display: flex;
+
+    align-items: start;
+    justify-content: center;
+
+    width: 100%;
+    min-height: 75vh;
+    @apply mb-12;
+  }
+
+  #faq .add {
+    /*Add is the name for the plus icon*/
+    display: block;
+  }
+
+  #faq .remove {
+    /*Remove is the name for the less icon*/
+    display: none;
+  }
+
+  #faq i {
+    font-size: 30px;
+  }
+
+  /*Accordion container and each item*/
+  .accordion-new {
+    /* max-width: 800px; */
+
+    margin: 0 auto;
+    /* padding: 0 1.5rem; */
+    @apply w-full px-12;
+  }
+
+  .accordion-item {
+    background-color: transparent;
+    /* border-bottom: 3px solid #ed9a9a; */
+    /* #ff6666 */
+    /* #ed9a9a */
+
+    margin-bottom: 10px;
+    /* padding: 10px; */
+    @apply border-b-3 border-red-700;
+    
+  }
+
+  /*Styles for the question*/
+
+  .accordion-title {
+    /* display: flex; */
+
+    /* align-items: center; */
+    /* justify-content: space-around; */
+
+    color: black;
+    font-size: 18px;
+    font-family: Open Sans;
+    /* font-weight: 600; */
+
+    /* width: 100%; */
+    /* padding: 1rem 0; */
+    /* cursor: pointer; */
+    transition-duration: 0.3s;
+    @apply flex items-start justify-between font-semibold w-full pt-4 pb-1 cursor-pointer pl-2;
+  }
+
+  .accordion-title:hover {
+    /* color: #ed9a9a; */
+    @apply text-red-700;
+  }
+
+  .accordion-title h2 {
+    width: 94%;
+  }
+
+  /*Styles for the answer*/
+
+  .accordion-content {
+    max-height: 0;
+    overflow: hidden;
+    position: relative;
+    /* background-color: #ff6666; */
+    transition: max-height 0.4s;
+    font-family: Open Sans;
+    font-weight: 600;
+    font-size: 17px;
+    @apply bg-red-700;
+  }
+
+  .accordion-content p {
+    padding: 20px;
+    color: white;
+
+  }
+}
+
+@screen md {
+  /* ini adalah settingan general untuk layar desktop */
+
+  .hero .hero-image,
+  .hero .hero-caption {
+    min-height: auto;
+  }
+  .hero .hero-cta {
+    @apply w-20 h-20 -translate-x-1/2 -translate-y-1/2;
+    background-size: auto;
+  }
+
+  .slider {
+    @apply flex-row;
+  }
+
+  /* .slider .thumbnail {
+    @apply w-auto order-first block overflow-visible pl-0;
+  }  */
+
+  .slider {
+    @apply flex my-4 flex-col;
+  }
+
+  .slider .thumbnail {
+    @apply w-auto order-last -mx-2 overflow-auto flex pl-4;
+  }
+
+  .slider .thumbnail .item {
+    @apply rounded-lg bg-gray-100 relative mb-4 cursor-pointer w-14 h-14;
+  }
+
+  .slider .preview {
+    /* height: 609px; */
+    /* width: 560px; */
+    @apply h-96 w-96;
+  }
+}
+
+@layer utilities {
+  .streched-link {
+    @apply absolute inset-0 z-10 cursor-pointer;
+  }
+
+  .grid {
+    grid-auto-flow: dense;
+    grid-auto-rows: minmax(180px, auto);
+  }
+}
+
+a.cart svg g circle.dot {
+  @apply hidden;
+}
+
+a.cart.cart-filled svg g circle.dot {
+  @apply block;
+}
+
+header {
+  @apply bg-red-700;
+}

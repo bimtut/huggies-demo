@@ -1,0 +1,1323 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <title>Stuk Validation - Huggies Admin</title>
+    <!-- katanya description menunjukan keterangan web yang akan bantu pencarian oleh botnya google -->
+    <meta name="description" content="Demo untuk microsite huggies" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="author" content="Bima Putra">
+
+    <!-- OG Tag membantu pembuatan link share dari facebook -->
+    <meta property="og:title" content="Huggies Indonesia" />
+    <meta property="og:type" content="popok untuk anak negeri" />
+    <meta property="og:url" content="" />
+    <meta property="og:image" content="" />
+
+    <link rel="manifest" href="site.webmanifest" />
+    <link rel="apple-touch-icon" href="images/favicon.ico" />
+    <!-- Place favicon.ico in the root directory -->
+
+    <link rel="stylesheet" href="./css/app.minify.css" />
+    <link rel="icon" href="images/favicon.ico" />
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.2/css/all.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.2/css/v4-shims.css">
+
+    <!-- ngefek ke tampilan warna tab di android phone. bagus untuk branding -->
+    <meta name="theme-color" content="#B91C1C" />
+
+    <!-- Tailwind -->
+    <link href="https://unpkg.com/tailwindcss/dist/tailwind.min.css" rel="stylesheet">
+    <style>
+        @import url('https://fonts.googleapis.com/css?family=Karla:400,700&display=swap');
+
+        .font-family-karla {
+            font-family: karla;
+        }
+
+        .bg-sidebar {
+            background: #da291c;
+        }
+
+        /* cta-btn dan account-link:hover warnanya biasanya samaan */
+        .cta-btn {
+            color: #da291c;
+        }
+
+        .upgrade-btn {
+            background: #1947ee;
+        }
+
+        .upgrade-btn:hover {
+            background: #0038fd;
+        }
+
+        .active-nav-link {
+            background: #b32d0e;
+        }
+
+        .nav-item:hover {
+            background: #a3290d;
+        }
+
+        .account-link:hover {
+            background: #da291c;
+        }
+
+        .bg-orange-600 {
+            background: #DD6B20;
+        }
+    </style>
+</head>
+
+<body class="bg-gray-100 font-family-karla flex">
+
+    <aside class="relative bg-sidebar h-screen w-72 hidden sm:block shadow-xl">
+        <div class="p-6">
+            <a href="admin-dashboard.html"
+                class="text-white text-3xl font-semibold uppercase hover:text-gray-300">Admin</a>
+        </div>
+        <nav class="text-white text-base font-semibold pt-3">
+            <a href="admin-dashboard.html" class="flex items-center text-white py-4 pl-6 nav-item">
+                <i class="fas fa-tachometer-alt mr-3"></i>
+                Dashboard
+            </a>
+            <a href="admin-tabs.html"
+                class="flex items-center text-white opacity-75 hover:opacity-100 py-4 pl-6 nav-item">
+                <i class="fas fa-tablet-alt mr-3"></i>
+                CMS
+            </a>
+            <a href="admin-validations.html"
+                class="active-nav-link flex items-center text-white opacity-75 hover:opacity-100 py-4 pl-6 nav-item">
+                <i class="fas fa-align-left mr-3"></i>
+                Struk Validation
+            </a>
+            <a href="admin-upload.html"
+                class="flex items-center text-white opacity-75 hover:opacity-100 py-4 pl-6 nav-item">
+                <i class="fas fa-table mr-3"></i>
+                Upload Prize
+            </a>
+
+        </nav>
+    </aside>
+
+    <div class="w-full flex flex-col h-screen overflow-y-hidden">
+        <!-- Desktop Header -->
+        <header class="w-full items-center bg-white py-2 px-6 hidden sm:flex">
+            <div class="w-1/2"></div>
+            <div x-data="{ isOpen: false }" class="relative w-1/2 flex justify-end">
+                <button @click="isOpen = !isOpen"
+                    class="realtive z-10 w-12 h-12 rounded-full overflow-hidden border-4 border-gray-400 hover:border-gray-300 focus:border-gray-300 focus:outline-none">
+                    <img src="https://source.unsplash.com/uJ8LNVCBjFQ/400x400">
+                </button>
+                <button x-show="isOpen" @click="isOpen = false"
+                    class="h-full w-full fixed inset-0 cursor-default"></button>
+                <div x-show="isOpen" class="absolute w-32 bg-white rounded-lg shadow-lg py-2 mt-16">
+                    <a href="#" class="block px-4 py-2 account-link hover:text-white">Account</a>
+                    <a href="#" class="block px-4 py-2 account-link hover:text-white">Support</a>
+                    <a href="#" class="block px-4 py-2 account-link hover:text-white">Sign Out</a>
+                </div>
+            </div>
+        </header>
+
+        <!-- Mobile Header & Nav -->
+        <header x-data="{ isOpen: false }" class="w-full bg-sidebar py-5 px-6 sm:hidden">
+            <div class="flex items-center justify-between">
+                <a href="admin-dashboard.html"
+                    class="text-white text-3xl font-semibold uppercase hover:text-gray-300">Admin</a>
+                <button @click="isOpen = !isOpen" class="text-white text-3xl focus:outline-none">
+                    <i x-show="!isOpen" class="fas fa-bars"></i>
+                    <i x-show="isOpen" class="fas fa-times"></i>
+                </button>
+            </div>
+
+            <!-- Dropdown Nav -->
+            <nav :class="isOpen ? 'flex': 'hidden'" class="flex flex-col pt-4">
+                <a href="admin-dashboard.html" class="flex items-center text-white py-2 pl-4 nav-item">
+                    <i class="fas fa-tachometer-alt mr-3"></i>
+                    Dashboard
+                </a>
+                <a href="blank.html"
+                    class="flex items-center text-white opacity-75 hover:opacity-100 py-2 pl-4 nav-item">
+                    <i class="fas fa-sticky-note mr-3"></i>
+                    Blank Page
+                </a>
+                <a href="tables.html"
+                    class="flex items-center text-white opacity-75 hover:opacity-100 py-2 pl-4 nav-item">
+                    <i class="fas fa-table mr-3"></i>
+                    Tables
+                </a>
+                <a href="forms.html"
+                    class="flex items-center text-white opacity-75 hover:opacity-100 py-2 pl-4 nav-item">
+                    <i class="fas fa-align-left mr-3"></i>
+                    Forms
+                </a>
+                <a href="tabs.html"
+                    class="flex items-center text-white opacity-75 hover:opacity-100 py-2 pl-4 nav-item">
+                    <i class="fas fa-tablet-alt mr-3"></i>
+                    Tabbed Content
+                </a>
+                <a href="calendar.html"
+                    class="flex items-center text-white opacity-75 hover:opacity-100 py-2 pl-4 nav-item">
+                    <i class="fas fa-calendar mr-3"></i>
+                    Calendar
+                </a>
+                <a href="#" class="flex items-center text-white opacity-75 hover:opacity-100 py-2 pl-4 nav-item">
+                    <i class="fas fa-cogs mr-3"></i>
+                    Support
+                </a>
+                <a href="#" class="flex items-center text-white opacity-75 hover:opacity-100 py-2 pl-4 nav-item">
+                    <i class="fas fa-user mr-3"></i>
+                    My Account
+                </a>
+                <a href="#" class="flex items-center text-white opacity-75 hover:opacity-100 py-2 pl-4 nav-item">
+                    <i class="fas fa-sign-out-alt mr-3"></i>
+                    Sign Out
+                </a>
+                <button
+                    class="w-full bg-white cta-btn font-semibold py-2 mt-3 rounded-lg shadow-lg hover:shadow-xl hover:bg-gray-300 flex items-center justify-center">
+                    <i class="fas fa-arrow-circle-up mr-3"></i> Upgrade to Pro!
+                </button>
+            </nav>
+        </header>
+
+        <!-- isi body -->
+        <div class="w-full overflow-x-hidden border-t flex flex-col">
+            <main class="w-full flex-grow p-6">
+                <h1 class="text-3xl text-black pb-2">Struk to Validate</h1>
+
+                <div class="flex flex-col mt-2">
+                    <div class="-my-2 py-2 overflow-x-auto sm:-mx-6 sm:px-6 lg:-mx-8 lg:px-8">
+                        <div
+                            class="align-middle inline-block min-w-full shadow overflow-hidden sm:rounded-lg border-b border-gray-200">
+                            <table class="min-w-full">
+                                <thead>
+                                    <tr>
+                                        <th
+                                            class="px-6 py-3 border-b border-gray-200 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider w-1/12">
+                                            No.
+                                        </th>
+                                        <th
+                                            class="px-6 py-3 border-b border-gray-200 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider w-5/12">
+                                            Username
+                                        </th>
+                                        <th
+                                            class="px-6 py-3 border-b border-gray-200 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider w-4/12">
+                                            Upload Date
+                                        </th>
+                                        <th
+                                            class="px-6 py-3 border-b border-gray-200 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider w-2/12">
+                                            action
+                                        </th>
+                                    </tr>
+                                </thead>
+
+                                <tbody class="bg-white">
+
+                                    <tr v-for="(u, index) in users" :key="index">
+                                        <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200 w-1/12">
+                                            <div class="text-sm leading-5 text-gray-900">
+                                                1.
+                                            </div>
+                                            
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200 w-5/12">
+                                            <div class="flex items-center">
+                                                <div class="flex-shrink-0 h-10 w-10">
+                                                    <img class="h-10 w-10 rounded-full"
+                                                        src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
+                                                        alt="" />
+                                                </div>
+
+                                                <div class="ml-4">
+                                                    <div class="text-sm leading-5 font-medium text-gray-900">
+                                                        JohnDoe
+                                                    </div>
+                                                    <div class="text-sm leading-5 text-gray-500">
+                                                        jondoe@gmail.com
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </td>
+
+                                        <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200 w-4/12">
+                                            <div class="text-sm leading-5 text-gray-900">
+                                                Friday
+                                            </div>
+                                            <div class="text-sm leading-5 text-gray-500">
+                                                17 Aug 2021
+                                            </div>
+                                        </td>
+
+                                        <td
+                                            class="px-6 py-4 whitespace-no-wrap text-right border-b border-gray-200 w-2/12">
+                                            <div class="flex justify-start" x-data="{ open: false }">
+                                                <a href="#"
+                                                    class="px-4 py-1 inline-flex text-sm leading-5 font-semibold rounded-full bg-green-100 text-green-800  hover:text-green-900 hover:bg-green-200  select-none no-outline focus:shadow-outline"
+                                                    @click="open = true">Check</a>
+
+                                                <!-- Dialog (full screen) -->
+                                                <div class="absolute top-0 left-0 flex items-center justify-center w-full h-full"
+                                                    style="background-color: rgba(0,0,0,.5);" x-show="open">
+
+                                                    <!-- A basic MODAL DIALOG with title, body and one button to close -->
+                                                    <div class="h-auto p-4 mx-2 text-left bg-white rounded shadow-xl md:max-w-4xl md:p-6 lg:p-8 md:mx-0"
+                                                        @click.away="open = false">
+
+
+                                                        <div class="flex flex-wrap">
+                                                            <div class="w-full lg:w-1/2 my-6 pr-0 lg:pr-2">
+                                                                <p class="text-xl pb-6 flex items-center">
+                                                                    <i class="fas fa-list mr-3"></i> Struk Validation
+                                                                </p>
+
+
+                                                                <div class="">
+                                                                    <label class="block text-sm text-gray-600"
+                                                                        for="cus_name">Username</label>
+                                                                    <input
+                                                                        class="w-full px-2 py-2 text-gray-700 bg-gray-200 rounded"
+                                                                        id="cus_name" name="cus_name" type="text"
+                                                                        required="" placeholder="Product Name"
+                                                                        aria-label="Name" value="superUser88">
+                                                                </div>
+                                                                <div class="mt-2">
+                                                                    <label class="block text-sm text-gray-600"
+                                                                        for="cus_email">Produk yang dibeli</label>
+                                                                    <input
+                                                                        class="w-full px-2  py-2 text-gray-700 bg-gray-200 rounded"
+                                                                        id="cus_email" name="cus_email" type="text"
+                                                                        required="" placeholder="Product Price"
+                                                                        aria-label="Email" value="Huggies Baby">
+                                                                </div>
+                                                                <div class="mt-2">
+                                                                    <label class="block text-sm text-gray-600"
+                                                                        for="cus_email"> Total Harga Produk</label>
+                                                                    <input
+                                                                        class="w-full px-2  py-2 text-gray-700 bg-gray-200 rounded"
+                                                                        id="cus_email" name="cus_email" type="text"
+                                                                        required="" placeholder="Product Price"
+                                                                        aria-label="Email" value="Rp 2.000.000">
+                                                                </div>
+                                                                <div class="mt-2">
+                                                                    <label class="block text-sm text-gray-600"
+                                                                        for="cus_email">Potential Point</label>
+                                                                    <input
+                                                                        class="w-full px-2  py-2 text-gray-700 bg-gray-200 rounded"
+                                                                        id="cus_email" name="cus_email" type="text"
+                                                                        required="" placeholder="Product Price"
+                                                                        aria-label="Email" value="2.000">
+                                                                </div>
+
+                                                                <div class="mt-6 flex flex-row">
+                                                                    <button
+                                                                        class="px-4 mr-1 py-1 text-white font-light tracking-wider bg-green-600 rounded"
+                                                                        type="submit">setuju</button>
+                                                                    <button
+                                                                        class="px-4 ml-1 py-1 text-white font-light tracking-wider bg-gray-600 rounded"
+                                                                        type="submit">tidak valid</button>
+                                                                    <!-- </div> -->
+                                                                    </form>
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="w-full lg:w-1/2 mt-6 pl-0 lg:pl-2">
+
+
+                                                                <form class="p-1 bg-white rounded mt-12">
+                                                                    <div class="">
+                                                                        <label class="block text-sm text-gray-600 "
+                                                                            for="cus_name">Foto Struk</label>
+                                                                        <p
+                                                                            class="bg-gray-200 flex justify-center rounded items-center px-10 py-24 text-gray-400">
+                                                                            Image Preview</p>
+                                                                    </div>
+                                                                </form>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </td>
+
+                                    </tr>
+                                    <tr v-for="(u, index) in users" :key="index">
+                                        <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200 w-1/12">
+                                            <div class="text-sm leading-5 text-gray-900">
+                                                2.
+                                            </div>
+                                            
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200 w-5/12">
+                                            <div class="flex items-center">
+                                                <div class="flex-shrink-0 h-10 w-10">
+                                                    <img class="h-10 w-10 rounded-full"
+                                                        src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
+                                                        alt="" />
+                                                </div>
+
+                                                <div class="ml-4">
+                                                    <div class="text-sm leading-5 font-medium text-gray-900">
+                                                        JohnDoe
+                                                    </div>
+                                                    <div class="text-sm leading-5 text-gray-500">
+                                                        jondoe@gmail.com
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </td>
+
+                                        <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200 w-4/12">
+                                            <div class="text-sm leading-5 text-gray-900">
+                                                Friday
+                                            </div>
+                                            <div class="text-sm leading-5 text-gray-500">
+                                                17 Aug 2021
+                                            </div>
+                                        </td>
+
+                                        <td
+                                            class="px-6 py-4 whitespace-no-wrap text-right border-b border-gray-200 w-2/12">
+                                            <div class="flex justify-start" x-data="{ open: false }">
+                                                <a href="#"
+                                                    class="px-4 py-1 inline-flex text-sm leading-5 font-semibold rounded-full bg-green-100 text-green-800  hover:text-green-900 hover:bg-green-200  select-none no-outline focus:shadow-outline"
+                                                    @click="open = true">Check</a>
+
+                                                <!-- Dialog (full screen) -->
+                                                <div class="absolute top-0 left-0 flex items-center justify-center w-full h-full"
+                                                    style="background-color: rgba(0,0,0,.5);" x-show="open">
+
+                                                    <!-- A basic MODAL DIALOG with title, body and one button to close -->
+                                                    <div class="h-auto p-4 mx-2 text-left bg-white rounded shadow-xl md:max-w-4xl md:p-6 lg:p-8 md:mx-0"
+                                                        @click.away="open = false">
+
+
+                                                        <div class="flex flex-wrap">
+                                                            <div class="w-full lg:w-1/2 my-6 pr-0 lg:pr-2">
+                                                                <p class="text-xl pb-6 flex items-center">
+                                                                    <i class="fas fa-list mr-3"></i> Struk Validation
+                                                                </p>
+
+
+                                                                <div class="">
+                                                                    <label class="block text-sm text-gray-600"
+                                                                        for="cus_name">Username</label>
+                                                                    <input
+                                                                        class="w-full px-2 py-2 text-gray-700 bg-gray-200 rounded"
+                                                                        id="cus_name" name="cus_name" type="text"
+                                                                        required="" placeholder="Product Name"
+                                                                        aria-label="Name" value="superUser88">
+                                                                </div>
+                                                                <div class="mt-2">
+                                                                    <label class="block text-sm text-gray-600"
+                                                                        for="cus_email">Produk yang dibeli</label>
+                                                                    <input
+                                                                        class="w-full px-2  py-2 text-gray-700 bg-gray-200 rounded"
+                                                                        id="cus_email" name="cus_email" type="text"
+                                                                        required="" placeholder="Product Price"
+                                                                        aria-label="Email" value="Huggies Baby">
+                                                                </div>
+                                                                <div class="mt-2">
+                                                                    <label class="block text-sm text-gray-600"
+                                                                        for="cus_email"> Total Harga Produk</label>
+                                                                    <input
+                                                                        class="w-full px-2  py-2 text-gray-700 bg-gray-200 rounded"
+                                                                        id="cus_email" name="cus_email" type="text"
+                                                                        required="" placeholder="Product Price"
+                                                                        aria-label="Email" value="Rp 2.000.000">
+                                                                </div>
+                                                                <div class="mt-2">
+                                                                    <label class="block text-sm text-gray-600"
+                                                                        for="cus_email">Potential Point</label>
+                                                                    <input
+                                                                        class="w-full px-2  py-2 text-gray-700 bg-gray-200 rounded"
+                                                                        id="cus_email" name="cus_email" type="text"
+                                                                        required="" placeholder="Product Price"
+                                                                        aria-label="Email" value="2.000">
+                                                                </div>
+
+                                                                <div class="mt-6 flex flex-row">
+                                                                    <button
+                                                                        class="px-4 mr-1 py-1 text-white font-light tracking-wider bg-green-600 rounded"
+                                                                        type="submit">setuju</button>
+                                                                    <button
+                                                                        class="px-4 ml-1 py-1 text-white font-light tracking-wider bg-gray-600 rounded"
+                                                                        type="submit">tidak valid</button>
+                                                                    <!-- </div> -->
+                                                                    </form>
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="w-full lg:w-1/2 mt-6 pl-0 lg:pl-2">
+
+
+                                                                <form class="p-1 bg-white rounded mt-12">
+                                                                    <div class="">
+                                                                        <label class="block text-sm text-gray-600 "
+                                                                            for="cus_name">Foto Struk</label>
+                                                                        <p
+                                                                            class="bg-gray-200 flex justify-center rounded items-center px-10 py-24 text-gray-400">
+                                                                            Image Preview</p>
+                                                                    </div>
+                                                                </form>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </td>
+
+                                    </tr>
+                                    <tr v-for="(u, index) in users" :key="index">
+                                        <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200 w-1/12">
+                                            <div class="text-sm leading-5 text-gray-900">
+                                                3.
+                                            </div>
+                                            
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200 w-5/12">
+                                            <div class="flex items-center">
+                                                <div class="flex-shrink-0 h-10 w-10">
+                                                    <img class="h-10 w-10 rounded-full"
+                                                        src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
+                                                        alt="" />
+                                                </div>
+
+                                                <div class="ml-4">
+                                                    <div class="text-sm leading-5 font-medium text-gray-900">
+                                                        JohnDoe
+                                                    </div>
+                                                    <div class="text-sm leading-5 text-gray-500">
+                                                        jondoe@gmail.com
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </td>
+
+                                        <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200 w-4/12">
+                                            <div class="text-sm leading-5 text-gray-900">
+                                                Friday
+                                            </div>
+                                            <div class="text-sm leading-5 text-gray-500">
+                                                17 Aug 2021
+                                            </div>
+                                        </td>
+
+                                        <td
+                                            class="px-6 py-4 whitespace-no-wrap text-right border-b border-gray-200 w-2/12">
+                                            <div class="flex justify-start" x-data="{ open: false }">
+                                                <a href="#"
+                                                    class="px-4 py-1 inline-flex text-sm leading-5 font-semibold rounded-full bg-green-100 text-green-800  hover:text-green-900 hover:bg-green-200  select-none no-outline focus:shadow-outline"
+                                                    @click="open = true">Check</a>
+
+                                                <!-- Dialog (full screen) -->
+                                                <div class="absolute top-0 left-0 flex items-center justify-center w-full h-full"
+                                                    style="background-color: rgba(0,0,0,.5);" x-show="open">
+
+                                                    <!-- A basic MODAL DIALOG with title, body and one button to close -->
+                                                    <div class="h-auto p-4 mx-2 text-left bg-white rounded shadow-xl md:max-w-4xl md:p-6 lg:p-8 md:mx-0"
+                                                        @click.away="open = false">
+
+
+                                                        <div class="flex flex-wrap">
+                                                            <div class="w-full lg:w-1/2 my-6 pr-0 lg:pr-2">
+                                                                <p class="text-xl pb-6 flex items-center">
+                                                                    <i class="fas fa-list mr-3"></i> Struk Validation
+                                                                </p>
+
+
+                                                                <div class="">
+                                                                    <label class="block text-sm text-gray-600"
+                                                                        for="cus_name">Username</label>
+                                                                    <input
+                                                                        class="w-full px-2 py-2 text-gray-700 bg-gray-200 rounded"
+                                                                        id="cus_name" name="cus_name" type="text"
+                                                                        required="" placeholder="Product Name"
+                                                                        aria-label="Name" value="superUser88">
+                                                                </div>
+                                                                <div class="mt-2">
+                                                                    <label class="block text-sm text-gray-600"
+                                                                        for="cus_email">Produk yang dibeli</label>
+                                                                    <input
+                                                                        class="w-full px-2  py-2 text-gray-700 bg-gray-200 rounded"
+                                                                        id="cus_email" name="cus_email" type="text"
+                                                                        required="" placeholder="Product Price"
+                                                                        aria-label="Email" value="Huggies Baby">
+                                                                </div>
+                                                                <div class="mt-2">
+                                                                    <label class="block text-sm text-gray-600"
+                                                                        for="cus_email"> Total Harga Produk</label>
+                                                                    <input
+                                                                        class="w-full px-2  py-2 text-gray-700 bg-gray-200 rounded"
+                                                                        id="cus_email" name="cus_email" type="text"
+                                                                        required="" placeholder="Product Price"
+                                                                        aria-label="Email" value="Rp 2.000.000">
+                                                                </div>
+                                                                <div class="mt-2">
+                                                                    <label class="block text-sm text-gray-600"
+                                                                        for="cus_email">Potential Point</label>
+                                                                    <input
+                                                                        class="w-full px-2  py-2 text-gray-700 bg-gray-200 rounded"
+                                                                        id="cus_email" name="cus_email" type="text"
+                                                                        required="" placeholder="Product Price"
+                                                                        aria-label="Email" value="2.000">
+                                                                </div>
+
+                                                                <div class="mt-6 flex flex-row">
+                                                                    <button
+                                                                        class="px-4 mr-1 py-1 text-white font-light tracking-wider bg-green-600 rounded"
+                                                                        type="submit">setuju</button>
+                                                                    <button
+                                                                        class="px-4 ml-1 py-1 text-white font-light tracking-wider bg-gray-600 rounded"
+                                                                        type="submit">tidak valid</button>
+                                                                    <!-- </div> -->
+                                                                    </form>
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="w-full lg:w-1/2 mt-6 pl-0 lg:pl-2">
+
+
+                                                                <form class="p-1 bg-white rounded mt-12">
+                                                                    <div class="">
+                                                                        <label class="block text-sm text-gray-600 "
+                                                                            for="cus_name">Foto Struk</label>
+                                                                        <p
+                                                                            class="bg-gray-200 flex justify-center rounded items-center px-10 py-24 text-gray-400">
+                                                                            Image Preview</p>
+                                                                    </div>
+                                                                </form>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </td>
+
+                                    </tr>
+                                    <tr v-for="(u, index) in users" :key="index">
+                                        <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200 w-1/12">
+                                            <div class="text-sm leading-5 text-gray-900">
+                                                4.
+                                            </div>
+                                            
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200 w-5/12">
+                                            <div class="flex items-center">
+                                                <div class="flex-shrink-0 h-10 w-10">
+                                                    <img class="h-10 w-10 rounded-full"
+                                                        src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
+                                                        alt="" />
+                                                </div>
+
+                                                <div class="ml-4">
+                                                    <div class="text-sm leading-5 font-medium text-gray-900">
+                                                        JohnDoe
+                                                    </div>
+                                                    <div class="text-sm leading-5 text-gray-500">
+                                                        jondoe@gmail.com
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </td>
+
+                                        <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200 w-4/12">
+                                            <div class="text-sm leading-5 text-gray-900">
+                                                Friday
+                                            </div>
+                                            <div class="text-sm leading-5 text-gray-500">
+                                                17 Aug 2021
+                                            </div>
+                                        </td>
+
+                                        <td
+                                            class="px-6 py-4 whitespace-no-wrap text-right border-b border-gray-200 w-2/12">
+                                            <div class="flex justify-start" x-data="{ open: false }">
+                                                <a href="#"
+                                                    class="px-4 py-1 inline-flex text-sm leading-5 font-semibold rounded-full bg-green-100 text-green-800  hover:text-green-900 hover:bg-green-200  select-none no-outline focus:shadow-outline"
+                                                    @click="open = true">Check</a>
+
+                                                <!-- Dialog (full screen) -->
+                                                <div class="absolute top-0 left-0 flex items-center justify-center w-full h-full"
+                                                    style="background-color: rgba(0,0,0,.5);" x-show="open">
+
+                                                    <!-- A basic MODAL DIALOG with title, body and one button to close -->
+                                                    <div class="h-auto p-4 mx-2 text-left bg-white rounded shadow-xl md:max-w-4xl md:p-6 lg:p-8 md:mx-0"
+                                                        @click.away="open = false">
+
+
+                                                        <div class="flex flex-wrap">
+                                                            <div class="w-full lg:w-1/2 my-6 pr-0 lg:pr-2">
+                                                                <p class="text-xl pb-6 flex items-center">
+                                                                    <i class="fas fa-list mr-3"></i> Struk Validation
+                                                                </p>
+
+
+                                                                <div class="">
+                                                                    <label class="block text-sm text-gray-600"
+                                                                        for="cus_name">Username</label>
+                                                                    <input
+                                                                        class="w-full px-2 py-2 text-gray-700 bg-gray-200 rounded"
+                                                                        id="cus_name" name="cus_name" type="text"
+                                                                        required="" placeholder="Product Name"
+                                                                        aria-label="Name" value="superUser88">
+                                                                </div>
+                                                                <div class="mt-2">
+                                                                    <label class="block text-sm text-gray-600"
+                                                                        for="cus_email">Produk yang dibeli</label>
+                                                                    <input
+                                                                        class="w-full px-2  py-2 text-gray-700 bg-gray-200 rounded"
+                                                                        id="cus_email" name="cus_email" type="text"
+                                                                        required="" placeholder="Product Price"
+                                                                        aria-label="Email" value="Huggies Baby">
+                                                                </div>
+                                                                <div class="mt-2">
+                                                                    <label class="block text-sm text-gray-600"
+                                                                        for="cus_email"> Total Harga Produk</label>
+                                                                    <input
+                                                                        class="w-full px-2  py-2 text-gray-700 bg-gray-200 rounded"
+                                                                        id="cus_email" name="cus_email" type="text"
+                                                                        required="" placeholder="Product Price"
+                                                                        aria-label="Email" value="Rp 2.000.000">
+                                                                </div>
+                                                                <div class="mt-2">
+                                                                    <label class="block text-sm text-gray-600"
+                                                                        for="cus_email">Potential Point</label>
+                                                                    <input
+                                                                        class="w-full px-2  py-2 text-gray-700 bg-gray-200 rounded"
+                                                                        id="cus_email" name="cus_email" type="text"
+                                                                        required="" placeholder="Product Price"
+                                                                        aria-label="Email" value="2.000">
+                                                                </div>
+
+                                                                <div class="mt-6 flex flex-row">
+                                                                    <button
+                                                                        class="px-4 mr-1 py-1 text-white font-light tracking-wider bg-green-600 rounded"
+                                                                        type="submit">setuju</button>
+                                                                    <button
+                                                                        class="px-4 ml-1 py-1 text-white font-light tracking-wider bg-gray-600 rounded"
+                                                                        type="submit">tidak valid</button>
+                                                                    <!-- </div> -->
+                                                                    </form>
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="w-full lg:w-1/2 mt-6 pl-0 lg:pl-2">
+
+
+                                                                <form class="p-1 bg-white rounded mt-12">
+                                                                    <div class="">
+                                                                        <label class="block text-sm text-gray-600 "
+                                                                            for="cus_name">Foto Struk</label>
+                                                                        <p
+                                                                            class="bg-gray-200 flex justify-center rounded items-center px-10 py-24 text-gray-400">
+                                                                            Image Preview</p>
+                                                                    </div>
+                                                                </form>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </td>
+
+                                    </tr>
+                                    <tr v-for="(u, index) in users" :key="index">
+                                        <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200 w-1/12">
+                                            <div class="text-sm leading-5 text-gray-900">
+                                                5.
+                                            </div>
+                                            
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200 w-5/12">
+                                            <div class="flex items-center">
+                                                <div class="flex-shrink-0 h-10 w-10">
+                                                    <img class="h-10 w-10 rounded-full"
+                                                        src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
+                                                        alt="" />
+                                                </div>
+
+                                                <div class="ml-4">
+                                                    <div class="text-sm leading-5 font-medium text-gray-900">
+                                                        JohnDoe
+                                                    </div>
+                                                    <div class="text-sm leading-5 text-gray-500">
+                                                        jondoe@gmail.com
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </td>
+
+                                        <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200 w-4/12">
+                                            <div class="text-sm leading-5 text-gray-900">
+                                                Friday
+                                            </div>
+                                            <div class="text-sm leading-5 text-gray-500">
+                                                17 Aug 2021
+                                            </div>
+                                        </td>
+
+                                        <td
+                                            class="px-6 py-4 whitespace-no-wrap text-right border-b border-gray-200 w-2/12">
+                                            <div class="flex justify-start" x-data="{ open: false }">
+                                                <a href="#"
+                                                    class="px-4 py-1 inline-flex text-sm leading-5 font-semibold rounded-full bg-green-100 text-green-800  hover:text-green-900 hover:bg-green-200  select-none no-outline focus:shadow-outline"
+                                                    @click="open = true">Check</a>
+
+                                                <!-- Dialog (full screen) -->
+                                                <div class="absolute top-0 left-0 flex items-center justify-center w-full h-full"
+                                                    style="background-color: rgba(0,0,0,.5);" x-show="open">
+
+                                                    <!-- A basic MODAL DIALOG with title, body and one button to close -->
+                                                    <div class="h-auto p-4 mx-2 text-left bg-white rounded shadow-xl md:max-w-4xl md:p-6 lg:p-8 md:mx-0"
+                                                        @click.away="open = false">
+
+
+                                                        <div class="flex flex-wrap">
+                                                            <div class="w-full lg:w-1/2 my-6 pr-0 lg:pr-2">
+                                                                <p class="text-xl pb-6 flex items-center">
+                                                                    <i class="fas fa-list mr-3"></i> Struk Validation
+                                                                </p>
+
+
+                                                                <div class="">
+                                                                    <label class="block text-sm text-gray-600"
+                                                                        for="cus_name">Username</label>
+                                                                    <input
+                                                                        class="w-full px-2 py-2 text-gray-700 bg-gray-200 rounded"
+                                                                        id="cus_name" name="cus_name" type="text"
+                                                                        required="" placeholder="Product Name"
+                                                                        aria-label="Name" value="superUser88">
+                                                                </div>
+                                                                <div class="mt-2">
+                                                                    <label class="block text-sm text-gray-600"
+                                                                        for="cus_email">Produk yang dibeli</label>
+                                                                    <input
+                                                                        class="w-full px-2  py-2 text-gray-700 bg-gray-200 rounded"
+                                                                        id="cus_email" name="cus_email" type="text"
+                                                                        required="" placeholder="Product Price"
+                                                                        aria-label="Email" value="Huggies Baby">
+                                                                </div>
+                                                                <div class="mt-2">
+                                                                    <label class="block text-sm text-gray-600"
+                                                                        for="cus_email"> Total Harga Produk</label>
+                                                                    <input
+                                                                        class="w-full px-2  py-2 text-gray-700 bg-gray-200 rounded"
+                                                                        id="cus_email" name="cus_email" type="text"
+                                                                        required="" placeholder="Product Price"
+                                                                        aria-label="Email" value="Rp 2.000.000">
+                                                                </div>
+                                                                <div class="mt-2">
+                                                                    <label class="block text-sm text-gray-600"
+                                                                        for="cus_email">Potential Point</label>
+                                                                    <input
+                                                                        class="w-full px-2  py-2 text-gray-700 bg-gray-200 rounded"
+                                                                        id="cus_email" name="cus_email" type="text"
+                                                                        required="" placeholder="Product Price"
+                                                                        aria-label="Email" value="2.000">
+                                                                </div>
+
+                                                                <div class="mt-6 flex flex-row">
+                                                                    <button
+                                                                        class="px-4 mr-1 py-1 text-white font-light tracking-wider bg-green-600 rounded"
+                                                                        type="submit">setuju</button>
+                                                                    <button
+                                                                        class="px-4 ml-1 py-1 text-white font-light tracking-wider bg-gray-600 rounded"
+                                                                        type="submit">tidak valid</button>
+                                                                    <!-- </div> -->
+                                                                    </form>
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="w-full lg:w-1/2 mt-6 pl-0 lg:pl-2">
+
+
+                                                                <form class="p-1 bg-white rounded mt-12">
+                                                                    <div class="">
+                                                                        <label class="block text-sm text-gray-600 "
+                                                                            for="cus_name">Foto Struk</label>
+                                                                        <p
+                                                                            class="bg-gray-200 flex justify-center rounded items-center px-10 py-24 text-gray-400">
+                                                                            Image Preview</p>
+                                                                    </div>
+                                                                </form>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </td>
+
+                                    </tr>
+                                    <tr v-for="(u, index) in users" :key="index">
+                                        <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200 w-1/12">
+                                            <div class="text-sm leading-5 text-gray-900">
+                                                6.
+                                            </div>
+                                            
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200 w-5/12">
+                                            <div class="flex items-center">
+                                                <div class="flex-shrink-0 h-10 w-10">
+                                                    <img class="h-10 w-10 rounded-full"
+                                                        src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
+                                                        alt="" />
+                                                </div>
+
+                                                <div class="ml-4">
+                                                    <div class="text-sm leading-5 font-medium text-gray-900">
+                                                        JohnDoe
+                                                    </div>
+                                                    <div class="text-sm leading-5 text-gray-500">
+                                                        jondoe@gmail.com
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </td>
+
+                                        <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200 w-4/12">
+                                            <div class="text-sm leading-5 text-gray-900">
+                                                Friday
+                                            </div>
+                                            <div class="text-sm leading-5 text-gray-500">
+                                                17 Aug 2021
+                                            </div>
+                                        </td>
+
+                                        <td
+                                            class="px-6 py-4 whitespace-no-wrap text-right border-b border-gray-200 w-2/12">
+                                            <div class="flex justify-start" x-data="{ open: false }">
+                                                <a href="#"
+                                                    class="px-4 py-1 inline-flex text-sm leading-5 font-semibold rounded-full bg-green-100 text-green-800  hover:text-green-900 hover:bg-green-200  select-none no-outline focus:shadow-outline"
+                                                    @click="open = true">Check</a>
+
+                                                <!-- Dialog (full screen) -->
+                                                <div class="absolute top-0 left-0 flex items-center justify-center w-full h-full"
+                                                    style="background-color: rgba(0,0,0,.5);" x-show="open">
+
+                                                    <!-- A basic MODAL DIALOG with title, body and one button to close -->
+                                                    <div class="h-auto p-4 mx-2 text-left bg-white rounded shadow-xl md:max-w-4xl md:p-6 lg:p-8 md:mx-0"
+                                                        @click.away="open = false">
+
+
+                                                        <div class="flex flex-wrap">
+                                                            <div class="w-full lg:w-1/2 my-6 pr-0 lg:pr-2">
+                                                                <p class="text-xl pb-6 flex items-center">
+                                                                    <i class="fas fa-list mr-3"></i> Struk Validation
+                                                                </p>
+
+
+                                                                <div class="">
+                                                                    <label class="block text-sm text-gray-600"
+                                                                        for="cus_name">Username</label>
+                                                                    <input
+                                                                        class="w-full px-2 py-2 text-gray-700 bg-gray-200 rounded"
+                                                                        id="cus_name" name="cus_name" type="text"
+                                                                        required="" placeholder="Product Name"
+                                                                        aria-label="Name" value="superUser88">
+                                                                </div>
+                                                                <div class="mt-2">
+                                                                    <label class="block text-sm text-gray-600"
+                                                                        for="cus_email">Produk yang dibeli</label>
+                                                                    <input
+                                                                        class="w-full px-2  py-2 text-gray-700 bg-gray-200 rounded"
+                                                                        id="cus_email" name="cus_email" type="text"
+                                                                        required="" placeholder="Product Price"
+                                                                        aria-label="Email" value="Huggies Baby">
+                                                                </div>
+                                                                <div class="mt-2">
+                                                                    <label class="block text-sm text-gray-600"
+                                                                        for="cus_email"> Total Harga Produk</label>
+                                                                    <input
+                                                                        class="w-full px-2  py-2 text-gray-700 bg-gray-200 rounded"
+                                                                        id="cus_email" name="cus_email" type="text"
+                                                                        required="" placeholder="Product Price"
+                                                                        aria-label="Email" value="Rp 2.000.000">
+                                                                </div>
+                                                                <div class="mt-2">
+                                                                    <label class="block text-sm text-gray-600"
+                                                                        for="cus_email">Potential Point</label>
+                                                                    <input
+                                                                        class="w-full px-2  py-2 text-gray-700 bg-gray-200 rounded"
+                                                                        id="cus_email" name="cus_email" type="text"
+                                                                        required="" placeholder="Product Price"
+                                                                        aria-label="Email" value="2.000">
+                                                                </div>
+
+                                                                <div class="mt-6 flex flex-row">
+                                                                    <button
+                                                                        class="px-4 mr-1 py-1 text-white font-light tracking-wider bg-green-600 rounded"
+                                                                        type="submit">setuju</button>
+                                                                    <button
+                                                                        class="px-4 ml-1 py-1 text-white font-light tracking-wider bg-gray-600 rounded"
+                                                                        type="submit">tidak valid</button>
+                                                                    <!-- </div> -->
+                                                                    </form>
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="w-full lg:w-1/2 mt-6 pl-0 lg:pl-2">
+
+
+                                                                <form class="p-1 bg-white rounded mt-12">
+                                                                    <div class="">
+                                                                        <label class="block text-sm text-gray-600 "
+                                                                            for="cus_name">Foto Struk</label>
+                                                                        <p
+                                                                            class="bg-gray-200 flex justify-center rounded items-center px-10 py-24 text-gray-400">
+                                                                            Image Preview</p>
+                                                                    </div>
+                                                                </form>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </td>
+
+                                    </tr>
+                                    <tr v-for="(u, index) in users" :key="index">
+                                        <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200 w-1/12">
+                                            <div class="text-sm leading-5 text-gray-900">
+                                                7.
+                                            </div>
+                                            
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200 w-5/12">
+                                            <div class="flex items-center">
+                                                <div class="flex-shrink-0 h-10 w-10">
+                                                    <img class="h-10 w-10 rounded-full"
+                                                        src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
+                                                        alt="" />
+                                                </div>
+
+                                                <div class="ml-4">
+                                                    <div class="text-sm leading-5 font-medium text-gray-900">
+                                                        JohnDoe
+                                                    </div>
+                                                    <div class="text-sm leading-5 text-gray-500">
+                                                        jondoe@gmail.com
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </td>
+
+                                        <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200 w-4/12">
+                                            <div class="text-sm leading-5 text-gray-900">
+                                                Friday
+                                            </div>
+                                            <div class="text-sm leading-5 text-gray-500">
+                                                17 Aug 2021
+                                            </div>
+                                        </td>
+
+                                        <td
+                                            class="px-6 py-4 whitespace-no-wrap text-right border-b border-gray-200 w-2/12">
+                                            <div class="flex justify-start" x-data="{ open: false }">
+                                                <a href="#"
+                                                    class="px-4 py-1 inline-flex text-sm leading-5 font-semibold rounded-full bg-green-100 text-green-800  hover:text-green-900 hover:bg-green-200  select-none no-outline focus:shadow-outline"
+                                                    @click="open = true">Check</a>
+
+                                                <!-- Dialog (full screen) -->
+                                                <div class="absolute top-0 left-0 flex items-center justify-center w-full h-full"
+                                                    style="background-color: rgba(0,0,0,.5);" x-show="open">
+
+                                                    <!-- A basic MODAL DIALOG with title, body and one button to close -->
+                                                    <div class="h-auto p-4 mx-2 text-left bg-white rounded shadow-xl md:max-w-4xl md:p-6 lg:p-8 md:mx-0"
+                                                        @click.away="open = false">
+
+
+                                                        <div class="flex flex-wrap">
+                                                            <div class="w-full lg:w-1/2 my-6 pr-0 lg:pr-2">
+                                                                <p class="text-xl pb-6 flex items-center">
+                                                                    <i class="fas fa-list mr-3"></i> Struk Validation
+                                                                </p>
+
+
+                                                                <div class="">
+                                                                    <label class="block text-sm text-gray-600"
+                                                                        for="cus_name">Username</label>
+                                                                    <input
+                                                                        class="w-full px-2 py-2 text-gray-700 bg-gray-200 rounded"
+                                                                        id="cus_name" name="cus_name" type="text"
+                                                                        required="" placeholder="Product Name"
+                                                                        aria-label="Name" value="superUser88">
+                                                                </div>
+                                                                <div class="mt-2">
+                                                                    <label class="block text-sm text-gray-600"
+                                                                        for="cus_email">Produk yang dibeli</label>
+                                                                    <input
+                                                                        class="w-full px-2  py-2 text-gray-700 bg-gray-200 rounded"
+                                                                        id="cus_email" name="cus_email" type="text"
+                                                                        required="" placeholder="Product Price"
+                                                                        aria-label="Email" value="Huggies Baby">
+                                                                </div>
+                                                                <div class="mt-2">
+                                                                    <label class="block text-sm text-gray-600"
+                                                                        for="cus_email"> Total Harga Produk</label>
+                                                                    <input
+                                                                        class="w-full px-2  py-2 text-gray-700 bg-gray-200 rounded"
+                                                                        id="cus_email" name="cus_email" type="text"
+                                                                        required="" placeholder="Product Price"
+                                                                        aria-label="Email" value="Rp 2.000.000">
+                                                                </div>
+                                                                <div class="mt-2">
+                                                                    <label class="block text-sm text-gray-600"
+                                                                        for="cus_email">Potential Point</label>
+                                                                    <input
+                                                                        class="w-full px-2  py-2 text-gray-700 bg-gray-200 rounded"
+                                                                        id="cus_email" name="cus_email" type="text"
+                                                                        required="" placeholder="Product Price"
+                                                                        aria-label="Email" value="2.000">
+                                                                </div>
+
+                                                                <div class="mt-6 flex flex-row">
+                                                                    <button
+                                                                        class="px-4 mr-1 py-1 text-white font-light tracking-wider bg-green-600 rounded"
+                                                                        type="submit">setuju</button>
+                                                                    <button
+                                                                        class="px-4 ml-1 py-1 text-white font-light tracking-wider bg-gray-600 rounded"
+                                                                        type="submit">tidak valid</button>
+                                                                    <!-- </div> -->
+                                                                    </form>
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="w-full lg:w-1/2 mt-6 pl-0 lg:pl-2">
+
+
+                                                                <form class="p-1 bg-white rounded mt-12">
+                                                                    <div class="">
+                                                                        <label class="block text-sm text-gray-600 "
+                                                                            for="cus_name">Foto Struk</label>
+                                                                        <p
+                                                                            class="bg-gray-200 flex justify-center rounded items-center px-10 py-24 text-gray-400">
+                                                                            Image Preview</p>
+                                                                    </div>
+                                                                </form>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </td>
+
+                                    </tr>
+                                    
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+            </main>
+
+            <footer class="w-full bg-white text-center p-1">
+                Built by <a target="_blank" href="#" class="underline">BimaPutra</a>.
+            </footer>
+        </div>
+        <!-- isi body -->
+    </div>
+
+    <!-- modal -->
+    <!-- <div x-data="{ open: false }" x-init="() => { setTimeout(() => { open = true }, 1500); }" x-show.transition.duration.500ms="open" class="fixed inset-0 w-full h-screen flex items-center justify-center bg-white bg-opacity-75 px-4 md:px-0" >
+        <div class="flex flex-col w-full max-w-lg bg-white shadow-lg rounded-lg border-4 border-gray-400 p-4" @click.away="open = false">
+            <div class="flex justify-between mb-6">
+                <h3 class="font-bold text-2xl">Welcome! 🚀</h3>
+                <button @click="open = false">
+                    <svg version="1.1" id="Capa_1" width="20px" height="20px" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 512.001 512.001" style="enable-background:new 0 0 512.001 512.001;" xml:space="preserve">
+                        <g>
+                            <g>
+                                <path d="M284.286,256.002L506.143,34.144c7.811-7.811,7.811-20.475,0-28.285c-7.811-7.81-20.475-7.811-28.285,0L256,227.717
+                                    L34.143,5.859c-7.811-7.811-20.475-7.811-28.285,0c-7.81,7.811-7.811,20.475,0,28.285l221.857,221.857L5.858,477.859
+                                    c-7.811,7.811-7.811,20.475,0,28.285c3.905,3.905,9.024,5.857,14.143,5.857c5.119,0,10.237-1.952,14.143-5.857L256,284.287
+                                    l221.857,221.857c3.905,3.905,9.024,5.857,14.143,5.857s10.237-1.952,14.143-5.857c7.811-7.811,7.811-20.475,0-28.285
+                                    L284.286,256.002z"></path>
+                            </g>
+                        </g>
+                    </svg>
+                </button>
+            </div>
+            <div class="">
+                <p class="text-center mb-8">Check out my code alongs where I build these templates! ⬇️</p>
+                <iframe width="100%" height="315" src="https://www.youtube.com/embed/juoVjGCUmoY" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe>
+            </div>
+            <div class="pt-6 pb-2">
+                <form action="https://www.youtube.com/channel/UC93OBzp6xqQ2y02m7PUhGAA">
+                    <button type="submit" class="bg-blue-500 text-white font-bold rounded-lg w-full hover:bg-blue-600 hover:shadow-xl py-3">Go To Channel 😁</button>
+                </form>
+            </div>
+        </div>
+    </div> -->
+
+    <!-- second modal -->
+    <!-- modal div -->
+    <!-- <div class="mt-6" x-data="{ open: false }"> -->
+
+    <!-- Button (blue), duh! -->
+    <!-- <button class="px-4 py-2 text-white bg-blue-500 rounded select-none no-outline focus:shadow-outline"
+            @click="open = true">Open Modal</button> -->
+
+    <!-- href as button -->
+    <!-- <a href="#"
+            class="text-indigo-600 hover:text-indigo-900  bg-blue-500 rounded select-none no-outline focus:shadow-outline">Edit</a> -->
+
+    <!-- Dialog (full screen) -->
+    <!-- <div class="absolute top-0 left-0 flex items-center justify-center w-full h-full"
+            style="background-color: rgba(0,0,0,.5);" x-show="open"> -->
+
+    <!-- A basic modal dialog with title, body and one button to close -->
+    <!-- <div class="h-auto p-4 mx-2 text-left bg-white rounded shadow-xl md:max-w-xl md:p-6 lg:p-8 md:mx-0"
+                @click.away="open = false">
+                <div class="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
+                    <h3 class="text-lg font-medium leading-6 text-gray-900">
+                        Modal Title
+                    </h3>
+
+                    <div class="mt-2">
+                        <p class="text-sm leading-5 text-gray-500">
+                            Adipisci quasi doloribus. Veniam veritatis dignissimos. Quis maiores ea. Et nulla sunt.
+                        </p>
+                    </div>
+                </div> -->
+
+    <!-- One big close button.  --->
+    <!-- <div class="mt-5 sm:mt-6">
+                    <span class="flex w-full rounded-md shadow-sm">
+                        <button @click="open = false"
+                            class="inline-flex justify-center w-full px-4 py-2 text-white bg-blue-500 rounded hover:bg-blue-700">
+                            Close this modal!
+                        </button>
+                    </span>
+                </div>
+
+            </div>
+        </div>
+    </div> -->
+
+    <!-- AlpineJS -->
+    <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js" defer></script>
+    <!-- Font Awesome -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/js/all.min.js"
+        integrity="sha256-KzZiKy0DWYsnwMF+X1DvQngQ2/FxF7MF3Ff72XcpuPs=" crossorigin="anonymous"></script>
+    <!-- ChartJS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js"
+        integrity="sha256-R4pqcOYV8lt7snxMQO/HSbVCFRPMdrhAFMH+vr9giYI=" crossorigin="anonymous"></script>
+
+    <script>
+        var chartOne = document.getElementById('chartOne');
+        var myChart = new Chart(chartOne, {
+            type: 'bar',
+            data: {
+                labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+                datasets: [{
+                    label: '# of Votes',
+                    data: [12, 19, 3, 5, 2, 3],
+                    backgroundColor: [
+                        'rgba(255, 99, 132, 0.2)',
+                        'rgba(54, 162, 235, 0.2)',
+                        'rgba(255, 206, 86, 0.2)',
+                        'rgba(75, 192, 192, 0.2)',
+                        'rgba(153, 102, 255, 0.2)',
+                        'rgba(255, 159, 64, 0.2)'
+                    ],
+                    borderColor: [
+                        'rgba(255, 99, 132, 1)',
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(255, 206, 86, 1)',
+                        'rgba(75, 192, 192, 1)',
+                        'rgba(153, 102, 255, 1)',
+                        'rgba(255, 159, 64, 1)'
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero: true
+                        }
+                    }]
+                }
+            }
+        });
+
+        var chartTwo = document.getElementById('chartTwo');
+        var myLineChart = new Chart(chartTwo, {
+            type: 'line',
+            data: {
+                labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+                datasets: [{
+                    label: '# of Votes',
+                    data: [12, 19, 3, 5, 2, 3],
+                    backgroundColor: [
+                        'rgba(255, 99, 132, 0.2)',
+                        'rgba(54, 162, 235, 0.2)',
+                        'rgba(255, 206, 86, 0.2)',
+                        'rgba(75, 192, 192, 0.2)',
+                        'rgba(153, 102, 255, 0.2)',
+                        'rgba(255, 159, 64, 0.2)'
+                    ],
+                    borderColor: [
+                        'rgba(255, 99, 132, 1)',
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(255, 206, 86, 1)',
+                        'rgba(75, 192, 192, 1)',
+                        'rgba(153, 102, 255, 1)',
+                        'rgba(255, 159, 64, 1)'
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero: true
+                        }
+                    }]
+                }
+            }
+        });
+
+        var chartThree = document.getElementById('chartThree');
+        var myChart = new Chart(chartThree, {
+            type: 'bar',
+            data: {
+                labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+                datasets: [{
+                    label: '# of Votes',
+                    data: [12, 19, 3, 5, 2, 3],
+                    backgroundColor: [
+                        'rgba(255, 99, 132, 0.2)',
+                        'rgba(54, 162, 235, 0.2)',
+                        'rgba(255, 206, 86, 0.2)',
+                        'rgba(75, 192, 192, 0.2)',
+                        'rgba(153, 102, 255, 0.2)',
+                        'rgba(255, 159, 64, 0.2)'
+                    ],
+                    borderColor: [
+                        'rgba(255, 99, 132, 1)',
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(255, 206, 86, 1)',
+                        'rgba(75, 192, 192, 1)',
+                        'rgba(153, 102, 255, 1)',
+                        'rgba(255, 159, 64, 1)'
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero: true
+                        }
+                    }]
+                }
+            }
+        });
+    </script>
+</body>
+
+</html>
